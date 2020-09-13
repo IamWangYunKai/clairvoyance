@@ -66,7 +66,8 @@ class Client(QMainWindow):
                 message = self.encode_message(self.keyboard_dict)
                 self.keybord_socket.sendto(message, (self.ip, self.keybord_port))
 
-            if len(self.mouse_dict['press']) > 0 or len(self.mouse_dict['release']) > 0 or len(self.mouse_dict['wheel']) > 0:
+            if len(self.mouse_dict['press']) > 0 or len(self.mouse_dict['release']) > 0 or len(self.mouse_dict['wheel']) > 0 or len(self.mouse_dict['move']) > 0:
+                
                 message = self.encode_message(self.mouse_dict)
                 self.mouse_socket.sendto(message, (self.ip, self.mouse_port))
 
@@ -128,7 +129,7 @@ class Client(QMainWindow):
 
     def mouseMoveEvent(self, event):
         s = event.windowPos()
-        self.mouse_dict['move'].append([s.x(), s.y()])
+        self.mouse_dict['move'].append([s.x()/self.width(), s.y()/self.height()])
 
     def mousePressEvent(self, e):
         if e.button() == Qt.LeftButton:

@@ -9,7 +9,7 @@ import cv2
 import numpy as np
 import pyautogui
 from PIL import ImageGrab
-
+"""
 while True:
     #t1 = time.time()
     img = ImageGrab.grab()
@@ -23,7 +23,7 @@ while True:
     if cv2.waitKey(10) & 0xFF == ord('q'):
         break
 cv2.destroyAllWindows()
-
+"""
 
 size = pyautogui.size()
 

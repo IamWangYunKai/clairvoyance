@@ -1,0 +1,3 @@
+screeninfo
+pyqt5
+pyautogui

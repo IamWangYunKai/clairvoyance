@@ -83,6 +83,8 @@ import cv2
 import numpy as np
 import threading
 
+from screeninfo import get_monitors
+
 ip = '127.0.0.1'
 keybord_port = 23333
 mouse_port = 23332
@@ -97,6 +99,17 @@ mouse_socket.bind((ip, mouse_port))
 width = 320
 height = 240
 
+def get_screen_info():
+    screen_info = {}
+    for m in get_monitors():
+        #print(m.x, m.y, m.width, m.height, m.name)
+        screen_info[m.name] = {
+            'x':m.x,
+            'y':m.y,
+            'width':m.width,
+            'height':m.height,
+            }
+        
 def keybord_loop():
     while True:
         data, addr = keybord_socket.recvfrom(65535)
@@ -111,7 +124,8 @@ def mouse_loop():
 
 def vision_loop():
     while True:
-        raw_img = ImageGrab.grab()
+        raw_img = ImageGrab.grab(all_screens=False)
+        #print(raw_img.size[0], raw_img.size[1])#7680,2160
         resize_img = raw_img.resize((width,height))
         img = np.array(resize_img)
         ret, jpeg = cv2.imencode('.jpg', img)
@@ -122,9 +136,9 @@ vision_thread = threading.Thread(target=vision_loop, args=())
 keybord_thread = threading.Thread(target=keybord_loop, args=())
 mouse_thread = threading.Thread(target=mouse_loop, args=())
 
-vision_thread.start()
-keybord_thread.start()
-mouse_thread.start()
+#vision_thread.start()
+#keybord_thread.start()
+#mouse_thread.start()
 
 """
 while True:
